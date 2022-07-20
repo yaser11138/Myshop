@@ -1,0 +1,183 @@
+{%extends "index.html"%}
+{%load static%}
+{% block static %}
+
+<link href="{% static 'css/cart.css' %}" rel="stylesheet" >
+
+{% endblock %}
+
+{% block main %}
+ <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Shopping Cart</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <div class="container px-3 my-5 clearfix">
+         <!-- Shopping cart table -->
+         <div class="card">
+             <div class="card-header">
+                 <h2>Shopping Cart</h2>
+             </div>
+             <div class="card-body">
+                 <div class="table-responsive">
+                   <table class="table table-bordered m-0">
+                     <thead>
+                       <tr>
+                         <!-- Set columns width -->
+                         <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                         <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                         <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                         <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                         <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                      {% for item in cart %}
+                        {% with product=item.product %}
+                       <tr>
+                         <td class="p-4">
+                           <div class="media align-items-center">
+                             <img src="{{ product.image.url }}" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                             <div class="media-body">
+                               <a href="{{ product.get_absloute_url }}" class="d-block text-dark">{{ product.name }}</a>
+                               <small>
+                                 <span class="text-muted">Color:</span>
+                                 <span class="ui-product-color ui-product-color-sm align-text-bottom" style="background:#e81e2c;"></span> &nbsp;
+                                 <span class="text-muted">Size: </span> EU 37 &nbsp;
+                                 <span class="text-muted">Ships from: </span> China
+                               </small>
+                             </div>
+                           </div>
+                         </td>
+                         <td class="text-right font-weight-semibold align-middle p-4">{{ item.price }}</td>
+                         <td class="align-middle p-4"><input type="text" class="form-control text-center" value="{{ item.quantitiy }}"></td>
+                         <td class="text-right font-weight-semibold align-middle p-4">{{ item.total_price }}</td>
+                         <td class="text-center align-middle px-0"><a href="{% url 'delete-cart' product.id %}" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                       </tr>
+                       {% endwith %}
+                     {% endfor %}
+                     </tbody>
+                   </table>
+                 </div>
+                 <!-- / Shopping cart table -->
+             
+                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+                   <div class="mt-4">
+                     <label class="text-muted font-weight-normal">Promocode</label>
+                     <input type="text" placeholder="ABC" class="form-control">
+                   </div>
+                   <div class="d-flex">
+                     <div class="text-right mt-4 mr-5">
+                       <label class="text-muted font-weight-normal m-0">Discount</label>
+                       <div class="text-large"><strong>$20</strong></div>
+                     </div>
+                     <div class="text-right mt-4">
+                       <label class="text-muted font-weight-normal m-0">Total price</label>
+                       <div class="text-large"><strong>{{ cart.get_total_price }}</strong></div>
+                     </div>
+                   </div>
+                 </div>
+             
+                 <div class="float-right">
+                   <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</button>
+                   <button type="button" class="btn btn-lg btn-primary mt-2">Checkout</button>
+                 </div>
+             
+               </div>
+           </div>
+       </div>
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  Our <span>Recomends</span>
+               </h2>
+            </div>
+            <div class="row">
+               <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Men's Shirt
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src='images/p1.png' alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $75
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src='images/p2.png' alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Men's Shirt
+                        </h5>
+                        <h6>
+                           $80
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="" class="option1">
+                           Add To Cart
+                           </a>
+                           <a href="" class="option2">
+                           Buy Now
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src='images/p3.png' alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Women's Dress
+                        </h5>
+                        <h6>
+                           $68
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+{% endblock %}
