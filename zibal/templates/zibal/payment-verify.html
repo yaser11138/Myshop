@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block style %}
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+    <link href="{% static 'css/payment-verify.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block main %}
+      <div class="card">
+      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+        {% if payment_detail.message == "success" %}
+        <i class="checkmark">✓</i>
+        {% elif payment_detail.message == "transaction failed" %}
+        <i class="notvalid">X</i>
+        {% else  %}
+          <i class="checkmark">?</i>
+        {% endif %}
+      </div>
+        <h1 id="payment-status" >{{ payment_detail.message }}</h1>
+       {% if payment_detail.message == "success" %}
+        <div class="payment-detail">
+
+        <p >We received your purchase request;<br/> we'll be in touch shortly!</p>
+        <p>amount : {{payment_detail.amount}} </p>
+        <p>order id : {{payment_detail.orderId}} </p>
+        </div>
+       {% endif  %}
+      </div>
+{% endblock %}

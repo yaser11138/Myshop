@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="pdf.css">
+	<body>
+		<div class="invoice-box">
+            <h1>My Shop Order {{ order.id }} Bill</h1>
+			<table>
+				<tr class="top">
+					<td colspan="2">
+						<table>
+							<tr>
+
+							    <td>
+									Invoice #: {{order.id}}<br />
+									Created: {{ order.created }}<br />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr class="heading">
+					<td>Payment Status</td>
+                    {% if order.paid %}
+					    <td>PAID</td>
+                    {% else %}
+                        <td>PENDING</td>
+                    {% endif %}
+				</tr>
+
+
+				<tr class="heading">
+					<td>Item</td>
+
+					<td>Price</td>
+				</tr>
+                {% for item in order.items.all %}
+				<tr class="item">
+					<td>{{ item.product.name }} {{ item.quantity }}x</td>
+
+					<td>{{ item.total_price }}</td>
+				</tr>
+				{% endfor %}
+				<tr class="total">
+					<td></td>
+
+					<td>Total: {{ order.total_price }}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
