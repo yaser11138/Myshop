@@ -15,13 +15,15 @@ def checkout(request):
     if request.method == "POST":
         form = AddOrderform(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            order.total_price = cart.get_discounted_price()
+            order.save()
             for item in cart:
                 OrderItem.objects.create(order=order, product=item["product"], quantity=item["quantity"],
                                          price=item["price"])
             cart.clear()
             create_email.delay(order.id)
-            return redirect(reverse("zibal:request",args=[order.id]))
+            return redirect(reverse("zibal:request", args=[order.id]))
         return render(request, "order/checkout.html", {"form": form})
     else:
         form = AddOrderform()
@@ -35,6 +37,6 @@ def invoice_creator(request, order_id):
     pdf_file["Content-Disposition"] = f"filename='order_{order_id}.pdf'"
     pdf_template = render_to_string("order/pdf/order_bill_pdf.html", {"order": order})
     weasyprint.HTML(string=pdf_template).write_pdf(pdf_file, stylesheets=[weasyprint.CSS(
-        settings.STATIC_FIlES + "css/pdf.css"
+        settings.STATIC_FILES + "css/pdf.css"
     )])
     return pdf_file

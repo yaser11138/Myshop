@@ -39,7 +39,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "slug", "price", "amount", "updated", "available"]
+    list_display = ["id","name", "slug", "price", "amount", "updated", "available"]
     prepopulated_fields = {"slug": ["name"]}
     list_filter = ["name", "price", AvailableFilter]
     search_fields = ["name", "price"]

@@ -2,10 +2,11 @@ from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from .models import Coupon
+from django.utils.translation import gettext as _
 
 
 class CouponAddForm(forms.Form):
-    code = forms.CharField()
+    code = forms.CharField(label=_("code"))
 
     def clean_code(self):
         now = timezone.now()

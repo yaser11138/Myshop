@@ -13,15 +13,13 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    total_price = models.PositiveIntegerField()
 
     class Meta:
         ordering = ("-created",)
 
     def __str__(self):
         return f"Order {self.first_name} , {self.created}"
-
-    def total_price(self):
-        return sum(item.total_price() for item in self.items.all())
 
 
 class OrderItem(models.Model):

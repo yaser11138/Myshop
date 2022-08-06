@@ -1,0 +1,38 @@
+
+.payment-status {
+    color: #88B04B;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.payment-detail {
+    color: #404F5E;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-size:20px;
+    margin: 0;
+}
+
+.checkmark {
+    color: #9ABC66;
+    font-size: 100px;
+    font-family: sans-serif;
+    line-height: 200px;
+    margin-left:-15px;
+}
+.notvalid {
+    color: #ff0000;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left:-15px;
+}
+
+.card {
+        text-align: center;
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 20px auto;
+}

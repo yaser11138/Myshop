@@ -1,7 +1,8 @@
 {%extends "index.html"%}
 {%load static%}
+{% load i18n %}
 {% block static %}
-<link href="{% static 'css/cart.css' %}" rel="stylesheet" >
+<link href="{% static 'css/cart.css' %}" rel="stylesheet">
 {% endblock %}
 {% block main %}
 <!-- inner page section -->
@@ -31,13 +32,13 @@
           <thead>
             <tr>
               <!-- Set columns width -->
-              <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details
+              <th class="text-center py-3 px-4" style="min-width: 400px;">{% trans  "Product Name" %} &amp; Details
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;">Price
+              <th class="text-right py-3 px-4" style="width: 100px;">{% translate "Price" %}
               </th>
-              <th class="text-center py-3 px-4" style="width: 120px;">Quantity
+              <th class="text-center py-3 px-4" style="width: 120px;">{% translate "Quantity" %}
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;">Total
+              <th class="text-right py-3 px-4" style="width: 100px;">{% translate "Total" %}
               </th>
               <th class="text-center align-middle py-3 px-0" style="width: 40px;">
                 <a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart">
@@ -73,9 +74,9 @@
               <td class="text-right font-weight-semibold align-middle p-4">{{ item.price }}
               </td>
               <td class="align-middle p-4">
-                <form method="post" action="{% url 'cart:cart-add' product.id %}">
+                <form method="post" action="{% url 'cart:product-add' product.id %}">
                   {% csrf_token %}
-                  <input type="number" min="0"  name="quantity" id="id_quantity" class="form-control text-center" value="{{ item.quantity }}">
+                  <input type="number" min="0"  name="{{ cart_form.quantity.html_name }}" id="id_quantity" class="form-control text-center" value="{{ item.quantity }}">
                   <input type="hidden" name="override" value="True" id="id_override">
                   <input type="submit" value="update" >
                 </form>
@@ -83,9 +84,8 @@
               <td class="text-right font-weight-semibold align-middle p-4">{{ item.total_price }}
               </td>
               <td class="text-center align-middle px-0">
-                <form id="my_form" method="post" action="{% url 'cart:cart-delete' product.id %}" >{% csrf_token %}
-                  <a  href="javascript:{}" onclick="document.getElementById('my_form').submit();" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×
-                  </a>
+                <form id="my_form" method="post" action="{% url 'cart:product-delete' product.id %}">{% csrf_token %}
+                  <button value="submit" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</button>
                 </form>
               </td>
             </tr>
@@ -95,27 +95,47 @@
         </table>
       </div>
       <!-- / Shopping cart table -->
-      <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+      <div class="d-flex flex-wrap justify-content-between">
         <div class="mt-4">
-          <label class="text-muted font-weight-normal">Promocode
-          </label>
-          <input type="text" placeholder="ABC" class="form-control">
+          <form method="post" action="{% url 'coupon:verify' %}" >
+                {% csrf_token %}
+
+                <label id="" class="text-muted font-weight-normal">{{ coupon_form.code.label }}</label>
+                <input type="text" name="{{ coupon_form.code.html_name }}"  placeholder="ABC" class="text-small" style="text-transform: none" >
+                <input type="submit">
+
+          </form>
+          {% if messages %}
+                  {% for message in messages %}
+                    <p {% if message.tags %} class="text-center {{ message.tags}}"{% endif %} > {{ message|striptags }}</p>
+                  {% endfor %}
+          {% endif %}
         </div>
-        <div class="d-flex">
+         <div class="d-flex">
           <div class="text-right mt-4 mr-5">
+            {% if cart.get_discount %}
             <label class="text-muted font-weight-normal m-0">Discount
             </label>
             <div class="text-large">
-              <strong>$20
+              <strong>{{ cart.get_discount}}
               </strong>
             </div>
+            {% endif %}
           </div>
+
           <div class="text-right mt-4">
             <label class="text-muted font-weight-normal m-0">Total price
             </label>
             <div class="text-large">
-              <strong>{{ cart.get_total_price }}
+              {% if cart.get_discount %}
+              <strong><s>{{ cart.get_total_price }}</s></strong>
+                <br>
+               <strong>{{ cart.get_discounted_price }}
               </strong>
+              {% else %}
+              <strong>{{ cart.get_total_price }}</strong>
+                <br>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -123,8 +143,8 @@
       <div class="float-right">
         <a href="{% url 'shop:product-list' %}" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3" >Back to shopping
         </a>
-        <button type="button" class="btn btn-lg btn-primary mt-2">Checkout
-        </button>
+        <a  href="{% url 'order:checkout' %}"  class="btn btn-lg btn-primary mt-2">Checkout
+        </a>
       </div>
     </div>
   </div>

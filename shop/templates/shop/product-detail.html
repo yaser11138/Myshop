@@ -11,7 +11,7 @@
                   <div class="preview col-md-6">
 
                      <div class="preview-pic tab-content">
-                       <div class="tab-pane active" id="pic-1"><img src="{% static 'images/p1.png' %}" /></div>
+                       <div class="tab-pane active" id="pic-1"><img src="{{ product.image.url  }}" /></div>
                      </div>
                   </div>
                   <div class="details col-md-6">
@@ -19,13 +19,13 @@
                      <p class="product-description">{{ product.description }}</p>
                      <h4 class="price">current price: <span>{{ product.price }}</span></h4>
                      <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-                     <h5 class="sizes">
-                     </h5>
-                     <h5 class="colors">
-                     </h5>
                      <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">add to cart</button>
-                        <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                        <form method="POST" action="{% url 'cart:product-add' product.id %}">
+                              {% csrf_token %}
+                              {{form.as_p}}
+                              <button class="add-to-cart btn btn-default" type="submit">add to cart</button>
+                           <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                        </form>
                      </div>
                   </div>
                </div>

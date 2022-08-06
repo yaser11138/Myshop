@@ -1,10 +1,7 @@
 from django import forms
+from django.utils.translation import gettext as _
 
 
-
-
-
-class CartForm(forms.Form):
-    quantity = forms.IntegerField()
-    override = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
-
+class CartUpdateForm(forms.Form):
+    quantity = forms.IntegerField(label=_("Quantity"))
+    override = forms.BooleanField(required=False,initial=False, widget=forms.HiddenInput)

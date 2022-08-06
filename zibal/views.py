@@ -2,13 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from order.models import Order
 from .ziabal import Zibal
 from cart.cart import Cart
-from order.tasks import create_email
+from .tasks import invoice_sender
 
 
 def request(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     zibal = Zibal()
-    response = zibal.request(order.total_price(), order_id,)
+    response = zibal.request(order.total_price, order_id,)
     track_id = response["trackId"]
     return redirect(f'https://gateway.zibal.ir/start/{track_id}')
 
@@ -22,6 +22,7 @@ def verify(request):
         order = get_object_or_404(Order, id=payment_detail["orderId"])
         order.paid = True
         order.save()
-        create_email.delay(order.id)
+        invoice_sender.delay(order.id)
+        del request.session["coupon-id"]
         cart.clear()
     return render(request, "zibal/payment-verify.html", {"payment_detail": payment_detail})

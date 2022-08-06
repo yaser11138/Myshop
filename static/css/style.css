@@ -873,7 +873,7 @@ a:focus {
   border-radius: 100%;
   background-color: #ffffff;
   border-radius: 100%;
-  margin: 0 2.5px;
+  margin: 0 3px;
   font-size: 18px;
 }
 
@@ -1061,7 +1061,6 @@ form input {
     width: 100%;
     font-size: 14px;
     margin-bottom: 20px;
-    text-transform: capitalize;
     line-height: normal;
 }
 
@@ -1073,7 +1072,6 @@ form textarea {
     min-height: 150px;
     font-size: 14px;
     margin-bottom: 20px;
-    text-transform: capitalize;
     line-height: normal;
 }
 
@@ -1082,7 +1080,6 @@ form input[type="submit"] {
     padding: 15px 45px;
     width: auto;
     font-size: 16px;
-    text-transform: capitalize;
     line-height: normal;
     margin: 0 auto;
     display: flex;
@@ -1120,7 +1117,5 @@ form input[type="submit"]:focus {
     font-weight: 400;
 }
 
-http://kute-themes.com/html/boutique/html/index.html
-https://template.hasthemes.com/noraure/noraure/index.html
-https://preview.hasthemes.com/xoss-preview/xoss/index.html
+
 

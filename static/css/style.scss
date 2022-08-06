@@ -446,6 +446,7 @@ a:focus {
     .option1 {
       background-color: $primary1;
       border: 1px solid $primary1;
+      border-radius: 5px;
       color: $white;
 
       &:hover {
