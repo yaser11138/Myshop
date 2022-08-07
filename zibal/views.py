@@ -23,6 +23,6 @@ def verify(request):
         order.paid = True
         order.save()
         invoice_sender.delay(order.id)
-        del request.session["coupon-id"]
         cart.clear()
+        cart.clear_coupon()
     return render(request, "zibal/payment-verify.html", {"payment_detail": payment_detail})

@@ -12,13 +12,10 @@ def add_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     form = CartUpdateForm(request.POST)
-    print(form.data)
     if form.is_valid():
         override = form.cleaned_data["override"]
         qunatity = form.cleaned_data["quantity"]
-        print(1)
         cart.add(product, quantity=qunatity, override_quantity=override)
-    print(form.errors)
     return redirect("cart:cart-detail")
 
 

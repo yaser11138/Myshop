@@ -33,7 +33,7 @@
                <nav class="navbar navbar-expand-lg custom_nav-container ">
                   <a class="navbar-brand" href="index.html"><img width="250" src="{% static 'images/logo.png' %}" alt="#" /></a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class=""> </span>
+                     <span class=""> </span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <ul class="navbar-nav">
@@ -50,7 +50,7 @@
                            <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                         <li class="nav-item">
-                           <a  class="nav-link"  href=""> <i class="fa fa-shopping-cart fa-lg"></i><span class="badge rounded-pill badge-light bg-light">{{ cart|length }}</span></a>
+                           <a class="nav-link"  href="{% url 'cart:cart-detail' %}"> <i class="fa fa-shopping-cart fa-lg"></i><span class="badge rounded-pill badge-light bg-light">{{ cart|length }}</span></a>
                         </li>
                         <form class="form-inline">
                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">

@@ -67,5 +67,9 @@ class Cart:
         self.session.pop("cart")
         self.save()
 
+    def clear_coupon(self):
+        self.session["coupon-id"] = None
+        self.save()
+
     def save(self):
         self.session.modified = True

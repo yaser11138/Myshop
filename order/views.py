@@ -21,8 +21,6 @@ def checkout(request):
             for item in cart:
                 OrderItem.objects.create(order=order, product=item["product"], quantity=item["quantity"],
                                          price=item["price"])
-            cart.clear()
-            create_email.delay(order.id)
             return redirect(reverse("zibal:request", args=[order.id]))
         return render(request, "order/checkout.html", {"form": form})
     else:
