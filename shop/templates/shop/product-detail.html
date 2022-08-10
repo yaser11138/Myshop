@@ -36,85 +36,37 @@
          <div class="container">
             <div class="heading_container heading_center">
                <h2>
-                  Our <span>Recomends</span>
+                  Our <span>Recommends</span>
                </h2>
             </div>
             <div class="row">
+               {% for product in recommends  %}
                <div class="col-sm-6 col-md-4 col-lg-3">
                   <div class="box">
                      <div class="option_container">
                         <div class="options">
                            <a href="" class="option1">
-                           Men's Shirt
+                           {{ product.name }}
                            </a>
-                           <a href="" class="option2">
+                           <a href="{% url 'shop:product-detail' product.id product.slug %}" class="option2">
                            Buy Now
                            </a>
                         </div>
                      </div>
                      <div class="img-box">
-                        <img src='images/p1.png' alt="">
+                        <img src='{{ product.image.url }}' alt="">
                      </div>
                      <div class="detail-box">
                         <h5>
-                           Men's Shirt
+                           {{ product.name }}
                         </h5>
                         <h6>
-                           $75
+                           {{ product.price }}
                         </h6>
                      </div>
                   </div>
                </div>
-               <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src='images/p2.png' alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Men's Shirt
-                        </h5>
-                        <h6>
-                           $80
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src='images/p3.png' alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Women's Dress
-                        </h5>
-                        <h6>
-                           $68
-                        </h6>
-                     </div>
-                  </div>
-               </div>
+               {% endfor %}
             </div>
          </div>
       </section>

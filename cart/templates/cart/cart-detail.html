@@ -1,6 +1,5 @@
 {%extends "index.html"%}
 {%load static%}
-{% load i18n %}
 {% block static %}
 <link href="{% static 'css/cart.css' %}" rel="stylesheet">
 {% endblock %}
@@ -32,13 +31,13 @@
           <thead>
             <tr>
               <!-- Set columns width -->
-              <th class="text-center py-3 px-4" style="min-width: 400px;">{% trans  "Product Name" %} &amp; Details
+              <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;">{% translate "Price" %}
+              <th class="text-right py-3 px-4" style="width: 100px;"> "Price
               </th>
-              <th class="text-center py-3 px-4" style="width: 120px;">{% translate "Quantity" %}
+              <th class="text-center py-3 px-4" style="width: 120px;"> "Quantity
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;">{% translate "Total" %}
+              <th class="text-right py-3 px-4" style="width: 100px;"> "Total
               </th>
               <th class="text-center align-middle py-3 px-0" style="width: 40px;">
                 <a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart">
@@ -117,7 +116,7 @@
             <label class="text-muted font-weight-normal m-0">Discount
             </label>
             <div class="text-large">
-              <strong>{{ cart.get_discount}}
+              <strong>{{ cart.get_discount }}
               </strong>
             </div>
             {% endif %}
@@ -159,81 +158,33 @@
       </h2>
     </div>
     <div class="row">
+    {% for product in recommends %}
       <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="box">
           <div class="option_container">
             <div class="options">
               <a href="" class="option1">
-                Men's Shirt
+                {{ product.name  }}
               </a>
-              <a href="" class="option2">
+              <a href="{% url "shop:product-detail" product.id product.slug %}" class="option2">
                 Buy Now
               </a>
             </div>
           </div>
           <div class="img-box">
-            <img src='images/p1.png' alt="">
+            <img src='{{ product.image.url }}' alt="">
           </div>
           <div class="detail-box">
             <h5>
-              Men's Shirt
+              {{ product.name }}
             </h5>
             <h6>
-              $75
+              {{ product.price }}
             </h6>
           </div>
         </div>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="box">
-          <div class="option_container">
-            <div class="options">
-              <a href="" class="option1">
-                Add To Cart
-              </a>
-              <a href="" class="option2">
-                Buy Now
-              </a>
-            </div>
-          </div>
-          <div class="img-box">
-            <img src='images/p2.png' alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Men's Shirt
-            </h5>
-            <h6>
-              $80
-            </h6>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="box">
-          <div class="option_container">
-            <div class="options">
-              <a href="" class="option1">
-                Add To Cart
-              </a>
-              <a href="" class="option2">
-                Buy Now
-              </a>
-            </div>
-          </div>
-          <div class="img-box">
-            <img src='images/p3.png' alt="">
-          </div>
-          <div class="detail-box">
-            <h5>
-              Women's Dress
-            </h5>
-            <h6>
-              $68
-            </h6>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>

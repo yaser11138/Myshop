@@ -3,7 +3,7 @@ from order.models import Order
 from .ziabal import Zibal
 from cart.cart import Cart
 from .tasks import invoice_sender
-
+from shop.recommends import Recommender
 
 def request(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -17,11 +17,16 @@ def verify(request):
     track_id = request.GET.get("trackId")
     cart = Cart(request)
     zibal = Zibal()
+    recommander = Recommender()
     payment_detail = zibal.verify(track_id)
     if payment_detail["result"] == 100:
         order = get_object_or_404(Order, id=payment_detail["orderId"])
         order.paid = True
         order.save()
+        
+        products = [item["product"] for item in cart]
+        recommander.product_boughts(products)
+        
         invoice_sender.delay(order.id)
         cart.clear()
         cart.clear_coupon()
