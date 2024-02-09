@@ -7,9 +7,10 @@ from django.utils.safestring import mark_safe
 from .models import Order, OrderItem
 
 import os
+import platform
 
-os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
-
+if platform.system() == 'Windows':
+    os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
 
 class OredrItemInline(admin.StackedInline):
     model = OrderItem
