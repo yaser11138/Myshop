@@ -33,11 +33,11 @@
               <!-- Set columns width -->
               <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;"> "Price
+              <th class="text-right py-3 px-4" style="width: 100px;"> Price
               </th>
-              <th class="text-center py-3 px-4" style="width: 120px;"> "Quantity
+              <th class="text-center py-3 px-4" style="width: 120px;"> Quantity
               </th>
-              <th class="text-right py-3 px-4" style="width: 100px;"> "Total
+              <th class="text-right py-3 px-4" style="width: 100px;"> Total
               </th>
               <th class="text-center align-middle py-3 px-0" style="width: 40px;">
                 <a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart">
@@ -98,7 +98,6 @@
         <div class="mt-4">
           <form method="post" action="{% url 'coupon:verify' %}" >
                 {% csrf_token %}
-
                 <label id="" class="text-muted font-weight-normal">{{ coupon_form.code.label }}</label>
                 <input type="text" name="{{ coupon_form.code.html_name }}"  placeholder="ABC" class="text-small" style="text-transform: none" >
                 <input type="submit">
@@ -106,7 +105,7 @@
           </form>
           {% if messages %}
                   {% for message in messages %}
-                    <p {% if message.tags %} class="text-center {{ message.tags}}"{% endif %} > {{ message|striptags }}</p>
+                    <p {% if message.tags %} class="text-center {{ message.tags}}" {% endif %} > {{ message|striptags }}</p>
                   {% endfor %}
           {% endif %}
         </div>
@@ -148,6 +147,7 @@
     </div>
   </div>
 </div>
+{% if recommends  %}
 <section class="product_section layout_padding">
   <div class="container">
     <div class="heading_container heading_center">
@@ -158,7 +158,7 @@
       </h2>
     </div>
     <div class="row">
-    {% for product in recommends %}
+      {% for product in recommends %}
       <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="box">
           <div class="option_container">
@@ -166,7 +166,7 @@
               <a href="" class="option1">
                 {{ product.name  }}
               </a>
-              <a href="{% url "shop:product-detail" product.id product.slug %}" class="option2">
+              <a href="{% url 'shop:product-detail' product.id product.slug %}"  class="option2">
                 Buy Now
               </a>
             </div>
@@ -185,6 +185,7 @@
         </div>
       </div>
       {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
