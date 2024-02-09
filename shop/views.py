@@ -17,7 +17,7 @@ def products_list(request):
 def product_list_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     categories = Category.objects.all()
-    products = products.filter(category=category)
+    products = Product.objects.filter(category=category)
     context = {
         "products": products,
         "categories": categories,
