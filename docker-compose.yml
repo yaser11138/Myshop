@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.11-alpine
+
+  redis:
+    image: redis:7.0.11-alpine
+
+  django:
+    container_name: django-shop
+    build:
+      context: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=0930jd30j9jd09j09j109fj01j9f
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - rabbitmq
+  
+  celery:
+    container_name: celery-shop
+    build:
+      context: .
+    command: celery --app=Shop-core worker -l INFO
+    volumes:
+      - .:/usr/src/app/
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=0930jd30j9jd09j09j109fj01j9f
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - REDIS_HOST=redis
+    depends_on:
+      - rabbitmq
+
