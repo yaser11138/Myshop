@@ -3,11 +3,13 @@ from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 from django.template.loader import render_to_string
-import weasyprint
 from cart.cart import Cart
+from weasyprint import HTML, CSS
+from weasyprint.text.fonts import FontConfiguration
 from .forms import AddOrderform
 from .models import OrderItem, Order
-from .tasks import create_email
+
+font_config = FontConfiguration()
 
 
 def checkout(request):
@@ -31,10 +33,14 @@ def checkout(request):
 @staff_member_required()
 def invoice_creator(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+    pdf_font_config = FontConfiguration()
     pdf_file = HttpResponse(content_type="appilicatin/pdf")
     pdf_file["Content-Disposition"] = f"filename='order_{order_id}.pdf'"
     pdf_template = render_to_string("order/pdf/order_bill_pdf.html", {"order": order})
-    weasyprint.HTML(string=pdf_template).write_pdf(pdf_file, stylesheets=[weasyprint.CSS(
+    print(order, pdf_template)
+    css = CSS(
         settings.STATIC_FILES + "css/pdf.css"
-    )])
+    )
+    HTML(string=pdf_template).write_pdf(pdf_file, stylesheets=[css], font_config=pdf_font_config)
+
     return pdf_file

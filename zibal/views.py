@@ -27,7 +27,6 @@ def verify(request):
         order = get_object_or_404(Order, id=payment_detail["orderId"])
         order.paid = True
         order.save()
-
         products = [item["product"] for item in cart]
         recommander.product_boughts(products)
         print(order.id)
