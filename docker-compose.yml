@@ -3,7 +3,9 @@ version: '3.8'
 services:
 
   rabbitmq:
-    image: rabbitmq:3.11-alpine
+    container_name: rabbitmq
+    build:
+      context: ./rabbitmq
 
   redis:
     image: redis:7.0.11-alpine

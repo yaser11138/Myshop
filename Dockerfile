@@ -17,6 +17,7 @@ RUN apk add --no-cache fontconfig glib
 
 # Copy font files to appropriate directory
 COPY static/fonts /usr/share/fonts
+RUN apk add --no-cache ttf-dejavu
 
 # Install the font
 RUN fc-cache -f -v
